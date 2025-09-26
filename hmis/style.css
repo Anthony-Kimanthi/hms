@@ -1,13 +1,15 @@
+/* GENERAL BODY */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
     display: flex;
 }
 
+/* SIDEBAR */
 .sidebar {
     width: 220px;
-    background: #222;
-    color: #fff;
+    background: #2C3E50; /* updated darker blue for professional look */
+    color: #ECF0F1;
     height: 100vh;
     padding: 20px 0;
     position: fixed;
@@ -15,32 +17,57 @@ body {
 
 .sidebar h2 {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    font-size: 1.5em;
+    color: #ECF0F1;
 }
 
-.sidebar a {
-    display: block;
-    color: #bbb;
-    padding: 12px 20px;
+/* SIDEBAR LINKS */
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li a {
+    display: flex;
+    align-items: center;
+    color: #ECF0F1;
     text-decoration: none;
-    transition: 0.3s;
+    padding: 12px 20px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    transition: background 0.3s, color 0.3s;
+    font-size: 1em;
 }
 
-.sidebar a:hover {
-    background: #444;
+/* ICON SPACING */
+.sidebar ul li a i {
+    margin-right: 10px;
+    font-size: 1.1em;
+}
+
+/* HOVER EFFECT */
+.sidebar ul li a:hover {
+    background-color: #34495E;
+    color: #1ABC9C;
+}
+
+/* ACTIVE LINK */
+.sidebar ul li a.active {
+    background-color: #1ABC9C;
     color: #fff;
+    font-weight: bold;
 }
 
-.sidebar a.active {
-    background: #007bff;
-    color: #fff;
-}
-
+/* CONTENT AREA */
 .content {
     margin-left: 220px;
     padding: 20px;
     flex-grow: 1;
+}
 
+/* HEADER */
 .header {
     position: fixed;
     top: 0;
@@ -66,17 +93,9 @@ body {
     color: #333;
 }
 
-/* push content below header when it's present */
+/* PUSH CONTENT BELOW HEADER WHEN HEADER IS PRESENT */
 .content.with-header {
     margin-left: 220px;
     margin-top: 60px;
     padding: 20px;
 }
-
-.sidebar ul li a.active {
-    background-color: #007bff;
-    color: #fff;
-    font-weight: bold;
-}
-
-    
