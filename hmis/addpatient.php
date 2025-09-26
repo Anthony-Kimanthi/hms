@@ -1,46 +1,59 @@
-<?php           
+<?php
+// Database connection settings (Docker Compose credentials)
+$db_host = "db";             // Service name from docker-compose.yml
+$db_username = "hmis_user";  // MySQL user
+$db_pass = "hmis_pass";      // MySQL password
+$db_name = "hmis_db";        // Database name
 
-$db_host="localhost";
-$db_username="root";
-$db_pass="";
-$db_name="hmsdb";
+// Create connection
+$conn = new mysqli($db_host, $db_username, $db_pass, $db_name);
 
-mysql_connect("$db_host","$db_username","$db_pass") or die("error occurred");
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
-mysql_select_db("$db_name") or die("no database name");                 
+// Process form data
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $name    = $_POST['name'];
+    $gender  = $_POST['gender'];
+    $age     = $_POST['age'];
+    $mobile  = $_POST['mobile'];
+    $email   = $_POST['email'];
+    $address = $_POST['address'];
 
-if(isset($_POST))  //Determine if a variable is set and is not NULL
-{
+    // Use prepared statement
+    $stmt = $conn->prepare("INSERT INTO addpatient (name, gender, age, mobile, email, address) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssisss", $name, $gender, $age, $mobile, $email, $address);
 
-
-$name=$_POST['name'];
-$gender=$_POST['gender'];
-$age=$_POST['age'];
-$mobile=$_POST['mobile'];
-$email=$_POST['email'];
-$address=$_POST['address'];
-
-$query="INSERT INTO addpatient(name,gender,age,mobile,email,address) VALUES ('$name','$gender','$age','$mobile','$email','$address')";
-$data = mysql_query($query)or die(mysql_error()); 
-
+    if ($stmt->execute()) {
+        $message = "Patient added successfully.";
+    } else {
+        $message = "Error: " . $stmt->error;
     }
-    ?>
-    <!DOCTYPE html>
+
+    $stmt->close();
+}
+
+$conn->close();
+?>
+<!DOCTYPE html>
 <html>
 <head>
-	<title>Hospital manangement system</title>
-	<!--Favicon-->
-	<link rel="stylesheet" type="text/css" href="css/index.css">
+    <title>Hospital Management System</title>
+    <!--Favicon-->
+    <link rel="stylesheet" type="text/css" href="css/index.css">
 
-	<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
-<!-- Latest compiled JavaScript -->
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
- <!-- jQuery -->
+    <!-- Latest compiled JavaScript -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <!-- jQuery -->
     <script src="js/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
@@ -49,21 +62,21 @@ $data = mysql_query($query)or die(mysql_error());
     <!-- Scrolling Nav JavaScript -->
     <script src="js/jquery.easing.min.js"></script>
     <script src="js/scrolling-nav.js"></script>
-
 </head>
 <body id="body">
-	
-
 
 <div id='cssmenu'>
-<ul>
-   <li ><a href='index.php'>Home</a></li>
-
-   <li><a href='about.php'>About</a></li>
-   <li><a href='doctors.php'>Doctors</a></li>
-   <li><a href='patients.php'>patients</a></li>
-</ul>
+    <ul>
+        <li><a href='index.php'>Home</a></li>
+        <li><a href='about.php'>About</a></li>
+        <li><a href='doctors.php'>Doctors</a></li>
+        <li><a href='patients.php'>Patients</a></li>
+    </ul>
 </div>
-patient is added.
+
+<div class="container">
+    <h3><?php echo isset($message) ? $message : "Fill the form to add a patient."; ?></h3>
+</div>
+
 </body>
 </html>
