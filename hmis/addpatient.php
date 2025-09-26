@@ -1,19 +1,6 @@
 <?php
-// Database connection settings (Docker Compose credentials)
-$db_host = "db";             // Service name from docker-compose.yml
-$db_username = "hmis_user";  // MySQL user
-$db_pass = "hmis_pass";      // MySQL password
-$db_name = "hmis_db";        // Database name
+include 'db.php'; // include the connection
 
-// Create connection
-$conn = new mysqli($db_host, $db_username, $db_pass, $db_name);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Process form data
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name    = $_POST['name'];
     $gender  = $_POST['gender'];
@@ -22,7 +9,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email   = $_POST['email'];
     $address = $_POST['address'];
 
-    // Use prepared statement
     $stmt = $conn->prepare("INSERT INTO addpatient (name, gender, age, mobile, email, address) VALUES (?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("ssisss", $name, $gender, $age, $mobile, $email, $address);
 
@@ -37,6 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 $conn->close();
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -80,3 +67,4 @@ $conn->close();
 
 </body>
 </html>
+
