@@ -1,16 +1,30 @@
-<?php $actvepage = 'admin'; ?>
+<?php
+// Example: for Billing, rename the file to billing.php
+$pageTitle = "Admin";      // e.g., "Billing"
+$pageHeader = "Admin";     // e.g., "Billing"
+$pageDescription = "System administration: user roles, access control, and settings."; // e.g., "Process payments and generate invoices."
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Admin - InfiHealth</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title><?= $pageTitle ?> - InfiHealth HMIS</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-    <div class="main-content">
-        <h1>Admin Module</h1>
-        <p>System administration: user roles, access control, and settings.</p>
+    <?php include 'sidebar.php'; ?>
+    <?php include 'header.php'; ?>
+
+    <div class="content with-header">
+        <h1><?= $pageHeader ?></h1>
+        <p><?= $pageDescription ?></p>
+
+        <!-- Module-specific content goes here -->
+        <!-- Example: table of patients, billing list, doctor schedules, etc. -->
     </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
-
