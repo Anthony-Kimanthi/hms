@@ -1,15 +1,12 @@
 <?php
-// Database connection settings (Docker Compose credentials)
-$db_host = "db";             // Service name from docker-compose.yml
-$db_username = "hmis_user";  // MySQL user
-$db_pass = "hmis_pass";      // MySQL password
-$db_name = "hmis_db";        // Database name
+$host = "mysql"; // use "mysql" if connecting via Docker service name, otherwise "localhost"
+$user = "root";
+$pass = "yourpassword"; // match docker-compose.yml MYSQL_ROOT_PASSWORD
+$db   = "hmsdb";
 
-// Create connection
-$conn = new mysqli($db_host, $db_username, $db_pass, $db_name);
+$conn = mysqli_connect($host, $user, $pass, $db);
 
-// Check connection
-if ($conn->connect_error) {
-    die("Database connection failed: " . $conn->connect_error);
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
 }
 ?>
