@@ -1,4 +1,4 @@
-<?php include 'sidebar.php'; ?>
+<?php $activePage = 'reports'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
