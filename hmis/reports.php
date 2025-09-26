@@ -7,7 +7,8 @@
 </head>
 <body>
     <?php include 'sidebar.php'; ?>
-    <div class="content">
+    <?php include 'header.php'; ?>
+    <div class="content with-header">
         <h1>🧾 Reports</h1>
         <p>Generate and view hospital reports.</p>
     </div>
