@@ -1,0 +1,43 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+}
+
+.sidebar {
+    width: 220px;
+    background: #222;
+    color: #fff;
+    height: 100vh;
+    padding: 20px 0;
+    position: fixed;
+}
+
+.sidebar h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.sidebar a {
+    display: block;
+    color: #bbb;
+    padding: 12px 20px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    background: #444;
+    color: #fff;
+}
+
+.sidebar a.active {
+    background: #007bff;
+    color: #fff;
+}
+
+.content {
+    margin-left: 220px;
+    padding: 20px;
+    flex-grow: 1;
+}
