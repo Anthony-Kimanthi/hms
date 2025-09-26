@@ -1,6 +1,4 @@
-<?php 
-$activePage = 'pharmacy';
-?>
+<?php $activePage = 'pharmacy'; ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,10 +7,9 @@ $activePage = 'pharmacy';
 </head>
 <body>
     <?php include 'sidebar.php'; ?>
-
     <div class="content">
-        <h1>Pharmacy Module</h1>
-        <p>Here you can dispense drugs and manage inventory.</p>
+        <h1>💊 Pharmacy</h1>
+        <p>Manage medicines and prescriptions.</p>
     </div>
 </body>
 </html>
