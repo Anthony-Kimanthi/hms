@@ -1,15 +1,30 @@
-<?php $activePage = 'doctors'; ?>
+<?php
+// Example: for Billing, rename the file to billing.php
+$pageTitle = "Doctors";      // e.g., "Billing"
+$pageHeader = "Doctors";     // e.g., "Billing"
+$pageDescription = "Dr's Room to make examination, order tests and prescribe drugs."; // e.g., "Process payments and generate invoices."
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Doctors - InfiHealth</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title><?= $pageTitle ?> - InfiHealth HMIS</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-    <div class="main-content">
-        <h1>Doctors Module</h1>
-        <p>Manage doctors, specializations, and schedules here.</p>
+    <?php include 'sidebar.php'; ?>
+    <?php include 'header.php'; ?>
+
+    <div class="content with-header">
+        <h1><?= $pageHeader ?></h1>
+        <p><?= $pageDescription ?></p>
+
+        <!-- Module-specific content goes here -->
+        <!-- Example: table of patients, billing list, doctor schedules, etc. -->
     </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
