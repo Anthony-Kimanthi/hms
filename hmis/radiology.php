@@ -1,4 +1,4 @@
-<?php include 'sidebar.php'; ?>
+<?php $activePage = 'radiology'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
