@@ -1,15 +1,15 @@
-<?php $activePage = 'doctors'; ?>
+<?php include 'sidebar.php'; ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Doctors - HMS</title>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Doctors - InfiHealth</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <?php include 'sidebar.php'; ?>
-    <div class="content">
-        <h1>🩺 Doctors</h1>
-        <p>Here you can manage doctors’ information.</p>
+    <div class="main-content">
+        <h1>Doctors Module</h1>
+        <p>Manage doctors, specializations, and schedules here.</p>
     </div>
 </body>
 </html>
