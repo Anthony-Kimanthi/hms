@@ -1,4 +1,4 @@
-<?php include 'sidebar.php'; ?>
+<?php $activePage = 'doctors'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
