@@ -1,4 +1,4 @@
-<?php include 'sidebar.php'; ?>
+<?php $activePage = 'lab'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
