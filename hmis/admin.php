@@ -1,4 +1,4 @@
-<?php include 'sidebar.php'; ?>
+<?php $actvepage = 'admin'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
