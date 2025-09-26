@@ -1,16 +1,15 @@
-<?php $activePage = 'reports'; ?>
+<?php include 'sidebar.php'; ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Reports - HMS</title>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Reports - InfiHealth</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <?php include 'sidebar.php'; ?>
-    <?php include 'header.php'; ?>
-    <div class="content with-header">
-        <h1>🧾 Reports</h1>
-        <p>Generate and view hospital reports.</p>
+    <div class="main-content">
+        <h1>Reports Module</h1>
+        <p>Generate and review reports for patients, billing, and more.</p>
     </div>
 </body>
 </html>
