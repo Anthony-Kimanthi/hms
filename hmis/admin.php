@@ -1,16 +1,16 @@
-<?php $activePage = 'admin'; ?>
+<?php include 'sidebar.php'; ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Admin - HMS</title>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Admin - InfiHealth</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <?php include 'sidebar.php'; ?>
-     <?php include 'header.php'; ?>
-    <div class="content with-header">
-        <h1>🔑 Admin</h1>
-        <p>Admin settings and role management.</p>
+    <div class="main-content">
+        <h1>Admin Module</h1>
+        <p>System administration: user roles, access control, and settings.</p>
     </div>
 </body>
 </html>
+
