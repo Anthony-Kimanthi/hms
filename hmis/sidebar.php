@@ -1,14 +1,19 @@
-<!-- sidebar.php -->
+<?php
+$current_page = basename($_SERVER['PHP_SELF']);
+?>
+
 <div class="sidebar">
     <h2>Modules</h2>
-    <a href="index.php" class="<?php echo ($activePage == 'home') ? 'active' : ''; ?>">🏠 Home</a>
-    <a href="patients.php" class="<?php echo ($activePage == 'patients') ? 'active' : ''; ?>">👤 Patients</a>
-    <a href="doctors.php" class="<?php echo ($activePage == 'doctors') ? 'active' : ''; ?>">🩺 Doctors</a>
-    <a href="billing.php" class="<?php echo ($activePage == 'billing') ? 'active' : ''; ?>">💳 Billing</a>
-    <a href="reports.php" class="<?php echo ($activePage == 'reports') ? 'active' : ''; ?>">🧾 Reports</a>
-    <a href="triage.php" class="<?php echo ($activePage == 'triage') ? 'active' : ''; ?>">🧑‍⚕️ Triage</a>
-    <a href="pharmacy.php" class="<?php echo ($activePage == 'pharmacy') ? 'active' : ''; ?>">💊 Pharmacy</a>
-    <a href="lab.php" class="<?php echo ($activePage == 'lab') ? 'active' : ''; ?>">🧪 Lab</a>
-    <a href="radiology.php" class="<?php echo ($activePage == 'radiology') ? 'active' : ''; ?>">🩻 Radiology</a>
-    <a href="admin.php" class="<?php echo ($activePage == 'admin') ? 'active' : ''; ?>">🔑 Admin</a>
+    <ul>
+        <li><a href="index.php" class="<?= $current_page == 'index.php' ? 'active' : '' ?>">Home</a></li>
+        <li><a href="patients.php" class="<?= $current_page == 'patients.php' ? 'active' : '' ?>">Patients</a></li>
+        <li><a href="doctors.php" class="<?= $current_page == 'doctors.php' ? 'active' : '' ?>">Doctors</a></li>
+        <li><a href="billing.php" class="<?= $current_page == 'billing.php' ? 'active' : '' ?>">Billing</a></li>
+        <li><a href="triage.php" class="<?= $current_page == 'triage.php' ? 'active' : '' ?>">Triage</a></li>
+        <li><a href="pharmacy.php" class="<?= $current_page == 'pharmacy.php' ? 'active' : '' ?>">Pharmacy</a></li>
+        <li><a href="lab.php" class="<?= $current_page == 'lab.php' ? 'active' : '' ?>">Lab</a></li>
+        <li><a href="radiology.php" class="<?= $current_page == 'radiology.php' ? 'active' : '' ?>">Radiology</a></li>
+        <li><a href="reports.php" class="<?= $current_page == 'reports.php' ? 'active' : '' ?>">Reports</a></li>
+        <li><a href="admin.php" class="<?= $current_page == 'admin.php' ? 'active' : '' ?>">Admin</a></li>
+    </ul>
 </div>
