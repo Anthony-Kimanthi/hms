@@ -15,8 +15,13 @@
       display: flex;
       flex-direction: column;
     }
+    .topbar {
+      background-color: #0d6efd;
+      color: white;
+      padding: 10px 20px;
+    }
     .sidebar {
-      min-height: 100vh;
+      min-height: calc(100vh - 56px); /* subtract topbar height */
       background-color: #343a40;
       color: white;
       padding-top: 20px;
@@ -38,12 +43,23 @@
   </style>
 </head>
 <body>
+  <!-- Top Bar -->
+  <nav class="navbar navbar-expand-lg topbar">
+    <div class="container-fluid">
+      <span class="navbar-brand mb-0 h1 text-white">🏥 Hospital Management System</span>
+      <div class="d-flex">
+        <span class="me-3">Hello, Admin</span>
+        <button class="btn btn-outline-light btn-sm">Logout</button>
+      </div>
+    </div>
+  </nav>
+
   <div class="container-fluid">
     <div class="row">
       <!-- Sidebar -->
       <nav class="col-md-3 col-lg-2 sidebar">
-        <h4 class="px-3">HMIS Modules</h4>
-        <a href="#" class="active">🏥 Dashboard</a>
+        <h5 class="px-3">Modules</h5>
+        <a href="#" class="active">🏠 Dashboard</a>
         <a href="#">🔍 Search / Register Patients</a>
         <a href="#">💳 Billing</a>
         <a href="#">🩺 Triage</a>
@@ -63,3 +79,4 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
