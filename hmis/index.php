@@ -1,85 +1,65 @@
+<?php
+// db.php include ready for later
+// include 'db.php';
+?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>Hospital manangement system</title>
-	<!--Favicon-->
-	<link rel="stylesheet" type="text/css" href="css/index.css">
-
-	<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
-<!-- Latest compiled JavaScript -->
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
- <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-
-    <!-- Scrolling Nav JavaScript -->
-    <script src="js/jquery.easing.min.js"></script>
-    <script src="js/scrolling-nav.js"></script>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hospital Management System</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .sidebar {
+      min-height: 100vh;
+      background-color: #343a40;
+      color: white;
+      padding-top: 20px;
+    }
+    .sidebar a {
+      color: #ccc;
+      display: block;
+      padding: 10px 15px;
+      text-decoration: none;
+    }
+    .sidebar a:hover, .sidebar a.active {
+      background-color: #495057;
+      color: #fff;
+    }
+    .content {
+      padding: 20px;
+      flex-grow: 1;
+    }
+  </style>
 </head>
-<body id="body">
-	
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <nav class="col-md-3 col-lg-2 sidebar">
+        <h4 class="px-3">HMIS Modules</h4>
+        <a href="#" class="active">🏥 Dashboard</a>
+        <a href="#">🔍 Search / Register Patients</a>
+        <a href="#">💳 Billing</a>
+        <a href="#">🩺 Triage</a>
+        <a href="#">💊 Pharmacy</a>
+      </nav>
 
-
-<div id='cssmenu'>
-<ul>
-   <li class='active'><a href='index.php'>Home</a></li>
-
-   <li><a href='about.php'>About</a></li>
-   <li><a href='doctors.php'>Doctors</a></li>
-   <li><a href='patients.php'>Patients</a></li>
-
-<label class="heading">Hospital management system</label>
-</ul>
-</div>
-
-<form role="form" method="post" action="addpatient.php" class="regform">
-  
-<center><h3 class="formheading">Patients registration form</h3></center>	
-  <div class="form-group">
-    <label for="name">Patient name:</label>
-    <input type="text" class="form-control" id="name" name="name" required>
+      <!-- Main content -->
+      <main class="col-md-9 col-lg-10 content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h2>Welcome to Hospital Management System</h2>
+        </div>
+        <p>Select a module from the left to get started.</p>
+      </main>
+    </div>
   </div>
-   <div class="form-group">
-  <label for="sel1">Select the gender:</label>
-  <select class="form-control" id="gender" name="gender" required>
-    <option>Male</option>
-    <option>Female</option>
-    <option>other</option>
-  </select>
-</div>
-  <div class="form-group">
-    <label for="age">Patient age:</label>
-    <input type="number" class="form-control" id="age" name="age" required>
-  </div>
- 
-<div class="form-group">
-    <label for="name">Mobile number:</label>
-    <input type="text" class="form-control" id="mobile" name="mobile" maxlength="10" minlength="10" required>
-  </div><div class="form-group">
-    <label for="name">Email id:</label>
-    <input type="email" class="form-control" id="email" name="email">
-  </div>
-  <div class="form-group">
-  <label for="comment">Address:</label>
-  <textarea class="form-control" rows="2" id="address" name="address" required></textarea>
-</div>
-  <center><button type="submit" class="btn btn-primary">Submit</button></center>
-</form>
-	
 
-
-
-
-
-
-</form>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
