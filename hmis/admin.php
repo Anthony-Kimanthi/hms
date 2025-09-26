@@ -9,7 +9,6 @@
     <?php include 'sidebar.php'; ?>
      <?php include 'header.php'; ?>
     <div class="content with-header">
-    <div class="content">
         <h1>🔑 Admin</h1>
         <p>Admin settings and role management.</p>
     </div>
