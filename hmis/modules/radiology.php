@@ -10,12 +10,12 @@ $pageDescription = "X-Rays, CT-Scans, Ultrasounds & MRIs"; // e.g., "Process pay
 <head>
     <meta charset="UTF-8">
     <title><?= $pageTitle ?> - InfiHealth HMIS</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-    <?php include 'sidebar.php'; ?>
-    <?php include 'header.php'; ?>
+    <?php include '../includes/sidebar.php'; ?>
+    <?php include '../includes/header.php'; ?>
 
     <div class="content with-header">
         <h1><?= $pageHeader ?></h1>
@@ -25,6 +25,6 @@ $pageDescription = "X-Rays, CT-Scans, Ultrasounds & MRIs"; // e.g., "Process pay
         <!-- Example: table of patients, billing list, doctor schedules, etc. -->
     </div>
 
-    <script src="script.js"></script>
+    <script src="../js/script.js"></script>
 </body>
 </html>
