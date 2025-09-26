@@ -1,6 +1,4 @@
-<?php 
-$activePage = 'patients';
-?>
+<?php $activePage = 'patients'; ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,9 +7,8 @@ $activePage = 'patients';
 </head>
 <body>
     <?php include 'sidebar.php'; ?>
-
     <div class="content">
-        <h1>Patients Module</h1>
+        <h1>👤 Patients</h1>
         <p>Here you can register and search patients.</p>
     </div>
 </body>
