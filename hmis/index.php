@@ -1,6 +1,4 @@
-<?php 
-$activePage = 'home';
-?>
+<?php $activePage = 'home'; ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,11 +7,9 @@ $activePage = 'home';
 </head>
 <body>
     <?php include 'sidebar.php'; ?>
-
     <div class="content">
-        <h1>Welcome to Hospital Management System</h1>
-        <p>Select a module from the left menu.</p>
+        <h1>🏥 Hospital Management System</h1>
+        <p>Welcome to the HMS Dashboard. Select a module from the sidebar.</p>
     </div>
 </body>
 </html>
-
