@@ -1,6 +1,4 @@
-<?php 
-$activePage = 'triage';
-?>
+<?php $activePage = 'triage'; ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,10 +7,9 @@ $activePage = 'triage';
 </head>
 <body>
     <?php include 'sidebar.php'; ?>
-
     <div class="content">
-        <h1>Triage Module</h1>
-        <p>Here you can record patient vitals and assign them to doctors.</p>
+        <h1>🧑‍⚕️ Triage</h1>
+        <p>Manage triage and patient assessment.</p>
     </div>
 </body>
 </html>
