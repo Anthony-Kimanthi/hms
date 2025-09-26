@@ -10,8 +10,9 @@
     <?php include 'header.php'; ?>
 
     <div class="content with-header">
-        <h2>🏥 Hospital Management System</h2>
+        <h2>InfiHealth MIS</h2>
         <p>Welcome to the HMS Dashboard. Select a module from the sidebar.</p>
     </div>
 </body>
 </html>
+
