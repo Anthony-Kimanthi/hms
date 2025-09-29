@@ -14,8 +14,8 @@ $pageDescription = "Here you can process payments and generate invoices."; // e.
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-        <?php include __DIR__ . '/includes/sidebar.php';?> 
-        <?php include __DIR__ . '/includes/header.php';?> 
+        <?php include __DIR__ . '/../includes/sidebar.php';?> 
+        <?php include __DIR__ . '/../includes/header.php';?> 
 
     <div class="content with-header">
         <h1><?= $pageHeader ?></h1>
@@ -25,6 +25,6 @@ $pageDescription = "Here you can process payments and generate invoices."; // e.
         <!-- Example: table of patients, billing list, doctor schedules, etc. -->
     </div>
 
-    <script src="./js/script.js"></script>
+    <script src="../js/script.js"></script>
 </body>
 </html>
