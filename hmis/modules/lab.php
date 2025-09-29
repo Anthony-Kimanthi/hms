@@ -10,7 +10,7 @@ $pageDescription = "Welcome to the Lab section. Here you’ll manage lab tests, 
 <head>
     <meta charset="UTF-8">
     <title><?= $pageTitle ?> - InfiHealth HMIS</title>
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
@@ -28,6 +28,6 @@ include("../includes/header.php");
         <!-- Example: table of patients, billing list, doctor schedules, etc. -->
     </div>
 
-    <script src="./js/script.js"></script>
+    <script src="../js/script.js"></script>
 </body>
 </html>
