@@ -14,5 +14,6 @@ $current_page = basename($_SERVER['PHP_SELF']);
         <li><a href="/modules/radiology.php" class="<?= $current_page == 'radiology.php' ? 'active' : '' ?>"><i class="fa-solid fa-x-ray"></i> Radiology</a></li>
         <li><a href="/modules/reports.php" class="<?= $current_page == 'reports.php' ? 'active' : '' ?>"><i class="fa-solid fa-file-medical"></i> Reports</a></li>
         <li><a href="/modules/admin.php" class="<?= $current_page == 'admin.php' ? 'active' : '' ?>"><i class="fa-solid fa-gear"></i> Admin</a></li>
+        <li><a href="/home.php"><i class="fa fa-home"></i> Home</a></li>
     </ul>
 </div>
