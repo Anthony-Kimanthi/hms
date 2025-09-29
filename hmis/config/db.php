@@ -1,12 +1,12 @@
 <?php
-$host = "db";          // service name from docker-compose.yml
-$user = "hmis_user";   // set in environment
-$pass = "hmis_pass";   // set in environment
-$dbname = "hmis_db";   // set in environment
+$host = "db";          // or "localhost" depending on Docker service name
+$dbname = "one_farm_db";
+$user = "root";        // match your docker-compose/mysql user
+$pass = "example";     // match your docker-compose/mysql password
 
-$conn = new mysqli($host, $user, $pass, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $user, $pass);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Database connection failed: " . $e->getMessage());
 }
-?>
