@@ -10,12 +10,15 @@ $pageDescription = "Search existing patients and register new."; // e.g., "Proce
 <head>
     <meta charset="UTF-8">
     <title><?= $pageTitle ?> - InfiHealth HMIS</title>
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-     <?php include __DIR__ . './includes/sidebar.php';?> 
-    <?php include __DIR__ . './includes/header.php';?> 
+<?php
+include("../includes/sidebar.php");
+include("../includes/header.php");
+?>
+
 
     <div class="content with-header">
         <h1><?= $pageHeader ?></h1>
