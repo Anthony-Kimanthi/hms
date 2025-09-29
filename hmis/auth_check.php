@@ -1,14 +1,16 @@
 <?php
 session_start();
 
+// Redirect to login if not logged in
 if (!isset($_SESSION['user_id'])) {
-    header("Location: ../login.php");
+    header("Location: login.php");
     exit;
 }
 
-$allowed_roles = $allowed_roles ?? []; // fallback if not set
-if (!empty($allowed_roles) && !in_array($_SESSION['role'], $allowed_roles)) {
-    header("Location: ../unauthorized.php");
-    exit;
+// Check role access (optional per module)
+function checkRole($allowedRoles) {
+    if (!in_array($_SESSION['role'], $allowedRoles)) {
+        header("Location: unauthorized.php");
+        exit;
+    }
 }
-?>
