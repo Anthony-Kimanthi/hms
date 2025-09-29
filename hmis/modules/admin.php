@@ -14,8 +14,14 @@ $pageDescription = "System administration: user roles, access control, and setti
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-     <?php include __DIR__ . '/includes/sidebar.php';?> 
-    <?php include __DIR__ . '/includes/header.php';?> 
+<?php
+include("../includes/sidebar.php");
+include("../includes/header.php");
+?>
+
+<h1>Admin</h1>
+<p>Manage users, roles, and system settings.</p>
+
     <div class="content with-header">
         <h1><?= $pageHeader ?></h1>
         <p><?= $pageDescription ?></p>
