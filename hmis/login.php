@@ -2,7 +2,7 @@
 session_start();
 
 // Always load db.php from config folder
-require_once __DIR__ . '/../config/db.php';
+require_once __DIR__ . '/config/db.php';
 
 $error = "";
 
