@@ -46,6 +46,8 @@ body {
     height: 100vh;
     padding: 20px 0;
     position: fixed;
+    display: flex;
+    flex-direction: column; /* allows menu on top, logout on bottom */
     transition: left 0.3s;
     z-index: 2000;
 }
@@ -56,10 +58,12 @@ body {
     font-size: 1.5em;
 }
 
+/* Sidebar menu */
 .sidebar ul {
     list-style: none;
     padding: 0;
     margin: 0;
+    flex-grow: 1; /* push logout down */
 }
 
 .sidebar ul li a {
@@ -69,7 +73,7 @@ body {
     text-decoration: none;
     padding: 12px 20px;
     border-radius: 5px;
-    margin-bottom: 5px;
+    margin: 5px 10px;
     transition: background 0.3s, color 0.3s;
 }
 
@@ -87,6 +91,32 @@ body {
     background-color: #1ABC9C;
     color: #fff;
     font-weight: bold;
+}
+
+/* Sidebar footer (logout button) */
+.sidebar-footer {
+    margin-top: auto;
+    padding: 15px 20px;
+}
+
+.sidebar-footer a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    background: #E74C3C;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.sidebar-footer a i {
+    margin-right: 8px;
+}
+
+.sidebar-footer a:hover {
+    background: #C0392B;
 }
 
 /* CONTENT */
