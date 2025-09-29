@@ -28,6 +28,6 @@ include("../includes/header.php");
         <!-- Example: table of patients, billing list, doctor schedules, etc. -->
     </div>
 
-    <script src="./js/script.js"></script>
+    <script src="../js/script.js"></script>
 </body>
 </html>
