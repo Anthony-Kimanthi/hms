@@ -16,7 +16,6 @@ $pageDescription = "System administration: user roles, access control, and setti
 <body>
      <?php include __DIR__ . '/includes/sidebar.php';?> 
     <?php include __DIR__ . '/includes/header.php';?> 
-
     <div class="content with-header">
         <h1><?= $pageHeader ?></h1>
         <p><?= $pageDescription ?></p>
