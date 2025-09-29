@@ -1,10 +1,16 @@
 <?php
-// Example: for Billing, rename the file to billing.php
-$pageTitle = "Home";      // e.g., "Billing"
-$pageHeader = "Home";     // e.g., "Billing"
-$pageDescription = "Welcome to InfiHealth MIS"; // e.g., "Process payments and generate invoices."
-?>
+session_start();
 
+// Only logged-in users can see home
+if (!isset($_SESSION['role'])) {
+    header("Location: login.php");
+    exit;
+}
+
+$pageTitle = "Home";
+$pageHeader = "Home";
+$pageDescription = "Welcome to InfiHealth MIS";
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,15 +21,11 @@ $pageDescription = "Welcome to InfiHealth MIS"; // e.g., "Process payments and g
 </head>
 <body>
     <?php include __DIR__ . '/includes/sidebar.php';?> 
-<?php include __DIR__ . '/includes/header.php';?> 
+    <?php include __DIR__ . '/includes/header.php';?> 
     <div class="content with-header">
         <h1><?= $pageHeader ?></h1>
         <p><?= $pageDescription ?></p>
-
-        <!-- Module-specific content goes here -->
-        <!-- Example: table of patients, billing list, doctor schedules, etc. -->
     </div>
-
     <script src="./js/script.js"></script>
 </body>
 </html>
