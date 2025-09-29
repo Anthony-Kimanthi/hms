@@ -4,7 +4,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 <div class="sidebar" id="sidebar">
     <h2>Modules</h2>
     <ul>
-        <li><a href="index.php" class="<?= $current_page == 'index.php' ? 'active' : '' ?>"><i class="fa-solid fa-hospital"></i> Home</a></li>
+        <li><a href="home.php" class="<?= $current_page == 'index.php' ? 'active' : '' ?>"><i class="fa-solid fa-hospital"></i> Home</a></li>
         <li><a href="/modules/patients.php" class="<?= $current_page == 'patients.php' ? 'active' : '' ?>"><i class="fa-solid fa-user-injured"></i> Patients</a></li>
         <li><a href="/modules/doctors.php" class="<?= $current_page == 'doctors.php' ? 'active' : '' ?>"><i class="fa-solid fa-user-doctor"></i> Doctors</a></li>
         <li><a href="/modules/billing.php" class="<?= $current_page == 'billing.php' ? 'active' : '' ?>"><i class="fa-solid fa-credit-card"></i> Billing</a></li>
