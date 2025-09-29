@@ -10,12 +10,12 @@ $pageDescription = "Data reports."; // e.g., "Process payments and generate invo
 <head>
     <meta charset="UTF-8">
     <title><?= $pageTitle ?> - InfiHealth HMIS</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-    <?php include '../includes/sidebar.php'; ?>
-    <?php include '../includes/header.php'; ?>
+     <?php include __DIR__ . '/includes/sidebar.php';?> 
+    <?php include __DIR__ . '/includes/header.php';?> 
 
     <div class="content with-header">
         <h1><?= $pageHeader ?></h1>
@@ -25,6 +25,6 @@ $pageDescription = "Data reports."; // e.g., "Process payments and generate invo
         <!-- Example: table of patients, billing list, doctor schedules, etc. -->
     </div>
 
-    <script src="../js/script.js"></script>
+    <script src="./js/script.js"></script>
 </body>
 </html>
