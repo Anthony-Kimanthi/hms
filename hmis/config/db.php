@@ -1,8 +1,8 @@
 <?php
-$host = "db"; // must match docker-compose service name
-$dbname = "hmis_db";
-$username = "hmis_user";
-$password = "hmis_pass";
+$host = "db";          // service name in docker-compose
+$dbname = "hmis_db";   // database name from compose
+$username = "hmis_user"; // MYSQL_USER
+$password = "hmis_pass"; // MYSQL_PASSWORD
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
