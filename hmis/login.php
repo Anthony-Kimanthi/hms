@@ -30,7 +30,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             );
         }
         // --------------------------------------------
-
+        var_dump($user);
+var_dump($password);
+exit;
         if ($user && password_verify($password, $user['password'])) {
             // Save session
             $_SESSION['user_id'] = $user['id'];
