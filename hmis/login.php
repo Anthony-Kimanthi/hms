@@ -15,25 +15,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute([$username]);
         $user = $stmt->fetch();
 
-        // --------- DEBUG BLOCK (temporary) ----------
+        // ---------- DEBUG BLOCK (temporary) ----------
         // Enable by visiting: login.php?debug=1 and then submit the form.
         if (isset($_GET['debug']) && $_GET['debug'] === '1') {
-            if (!$user) {
-                die("DEBUG: User not found: " . htmlspecialchars($username));
+            echo "<pre>DEBUG OUTPUT\n\n";
+            echo "Entered username (raw): " . var_export($_POST['username'], true) . "\n";
+            echo "Trimmed username used in query: " . var_export($username, true) . "\n";
+            echo "Entered password (raw): " . var_export($password, true) . "\n\n";
+
+            if ($user === false) {
+                echo "QUERY RESULT: NO ROW RETURNED (user === false)\n\n";
+                // Show available databases/tables that PHP can see
+                try {
+                    $rows = $pdo->query("SHOW DATABASES")->fetchAll();
+                    echo "Databases visible to this PDO user:\n";
+                    foreach ($rows as $r) { echo " - " . implode(", ", $r) . "\n"; }
+                    echo "\n";
+                } catch (Exception $e) {
+                    echo "Could not list databases: " . $e->getMessage() . "\n\n";
+                }
+            } else {
+                echo "QUERY RESULT: ROW FOUND\n\n";
+                echo "Row contents:\n";
+                print_r($user);
+                echo "\n";
+                echo "DB username exact (with length): " . $user['username'] . " (len=" . mb_strlen($user['username']) . ")\n";
+                echo "DB password hash (with length): " . $user['password'] . " (len=" . mb_strlen($user['password']) . ")\n\n";
+                $verify = password_verify($password, $user['password']) ? 'TRUE' : 'FALSE';
+                echo "password_verify(result): " . $verify . "\n";
             }
-            $matches = password_verify($password, $user['password']);
-            die(
-                "DEBUG: User found: " . htmlspecialchars($user['username'])
-                . " | password_verify => " . ($matches ? 'TRUE' : 'FALSE')
-                . " | Raw input: " . htmlspecialchars($password)
-                . " | DB hash: " . htmlspecialchars($user['password'])
-            );
+
+            echo "\nEND DEBUG\n</pre>";
+            exit;
         }
         // --------------------------------------------
-   echo "<pre>";
-print_r($user);
-echo "</pre>";
-exit;
 
         if ($user && password_verify($password, $user['password'])) {
             // Save session
