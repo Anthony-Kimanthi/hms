@@ -15,6 +15,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute([$username]);
         $user = $stmt->fetch();
 
+        // --------- DEBUG BLOCK (temporary) ----------
+        // Enable by visiting: login.php?debug=1 and then submit the form.
+        if (isset($_GET['debug']) && $_GET['debug'] === '1') {
+            if (!$user) {
+                die("DEBUG: User not found: " . htmlspecialchars($username));
+            }
+            $matches = password_verify($password, $user['password']);
+            die(
+                "DEBUG: User found: " . htmlspecialchars($user['username'])
+                . " | password_verify => " . ($matches ? 'TRUE' : 'FALSE')
+                . " | Raw input: " . htmlspecialchars($password)
+                . " | DB hash: " . htmlspecialchars($user['password'])
+            );
+        }
+        // --------------------------------------------
+
         if ($user && password_verify($password, $user['password'])) {
             // Save session
             $_SESSION['user_id'] = $user['id'];
