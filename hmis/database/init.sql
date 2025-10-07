@@ -7,11 +7,9 @@ CREATE TABLE IF NOT EXISTS users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Insert an admin user
-INSERT INTO users (username, password, role) VALUES 
-('admin', '$2y$10$9hE3FJ7xUUtAF5ohElPqF.V6oZ3tAi8BnYXxE24Y2vq/vG4lPpWhO', 'admin');
+TRUNCATE TABLE users;
 
--- Insert a doctor user
-INSERT INTO users (username, password, role) VALUES 
-('doctor1', '$2y$10$GdCgzFlAEtDWjwChy05Yqu7D9vlnjQTeQniVKwLqXfJx3ByTx1yG2', 'doctor');
+INSERT INTO users (username, password, role) VALUES
+('admin', '$2y$10$NvyER9WZKw.HxkE29M3rKe.0E5k3LNRKn5H1DxfvTkk1ClYBPXbL6', 'admin'),
+('doctor1', '$2y$10$h0T4n1anrQ3uZBZcK6XG8.Wf8/7F8YfX1D6Hr29nsrjZ2b6ED5rDi', 'doctor');
 
