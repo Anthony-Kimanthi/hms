@@ -1,16 +1,13 @@
 version: '3.8'
 
-services:
-  web:
-    image: php:8.2-apache
-    container_name: hmis-web
-    volumes:
-      - ./hmis:/var/www/html
-    ports:
-      - "8080:80"
-    depends_on:
-      - db
-
+services: 
+web: 
+build: . 
+container_name: hmis-web 
+volumes: 
+- ./hmis:/var/www/html 
+ports: - "8080:80" 
+depends_on: - db
   db:
     image: mysql:8.0
     container_name: hmis-db
