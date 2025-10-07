@@ -1,10 +1,7 @@
 <?php
 session_start();
-
-// Always load db.php from config folder
 require_once __DIR__ . '/config/db.php';
 
-// Debug login helper - temporary file. Revert after debugging.
 $error = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -13,7 +10,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     echo "<h2>DEBUG: Login attempt</h2>";
 
-    // Show which DB we're connected to
     try {
         $currentDb = $pdo->query('SELECT DATABASE()')->fetchColumn();
         echo "<p><strong>Connected DB:</strong> " . htmlspecialchars($currentDb) . "</p>";
@@ -30,11 +26,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ?");
         $stmt->execute([$username]);
-        $user = $stmt->fetch();
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if (!$user) {
             echo "<p style='color:red;'><strong>No user found</strong> for username: " . htmlspecialchars($username) . "</p>";
-            echo "<p>Try checking phpMyAdmin or run: <code>SELECT username FROM users WHERE username = 'admin'</code></p>";
+            echo "<p>Check phpMyAdmin: <code>SELECT username FROM users;</code></p>";
             exit;
         }
 
@@ -44,19 +40,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $storedHash = $user['password'] ?? '';
         echo "<p><strong>Stored hash:</strong> <code>" . htmlspecialchars($storedHash) . "</code></p>";
 
-        $verify = password_verify($password, $storedHash);
+        $verify = false;
+
+        // Detect if it's a bcrypt hash
+        if (preg_match('/^\$2y\$/', $storedHash)) {
+            $verify = password_verify($password, $storedHash);
+        } else {
+            // Fallback: legacy plain text password
+            if ($password === $storedHash) {
+                $verify = true;
+
+                // Optional: rehash and update to bcrypt
+                $newHash = password_hash($password, PASSWORD_BCRYPT);
+                $update = $pdo->prepare("UPDATE users SET password = ? WHERE id = ?");
+                $update->execute([$newHash, $user['id']]);
+                echo "<p style='color:orange;'>Legacy password detected — rehashed and updated to bcrypt.</p>";
+            }
+        }
+
         echo "<p><strong>password_verify result:</strong> " . ($verify ? "<span style='color:green'>TRUE</span>" : "<span style='color:red'>FALSE</span>") . "</p>";
 
         if ($verify) {
-            // Set session (we won't redirect in debug mode)
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
             $_SESSION['role'] = $user['role'];
-            echo "<p style='color:green;'>Password verified. Session set for user: " . htmlspecialchars($user['username']) . " (role: " . htmlspecialchars($user['role']) . ").</p>";
+            echo "<p style='color:green;'>✅ Login successful for user: " . htmlspecialchars($user['username']) . " (role: " . htmlspecialchars($user['role']) . ").</p>";
             echo "<p><em>(Debug mode: not redirecting.)</em></p>";
         } else {
-            echo "<p style='color:red;'>Invalid username or password (verification failed).</p>";
-            echo "<p>Try resetting the password for this user in phpMyAdmin using the SQL snippet I gave earlier.</p>";
+            echo "<p style='color:red;'>❌ Invalid username or password (verification failed).</p>";
         }
     } catch (Exception $e) {
         echo "<p style='color:red;'><strong>Query error:</strong> " . htmlspecialchars($e->getMessage()) . "</p>";
