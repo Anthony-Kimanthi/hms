@@ -2,48 +2,70 @@
 session_start();
 require_once __DIR__ . '/config/db.php';
 
+$error = "";
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username'] ?? '');
     $password = $_POST['password'] ?? '';
 
-    if (!$username || !$password) {
-        $error = "Please enter both username and password.";
-    } else {
-        try {
-            $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ?");
-            $stmt->execute([$username]);
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($username && $password) {
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ?");
+        $stmt->execute([$username]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if ($user) {
-                $storedHash = $user['password'] ?? '';
-                $verify = false;
+        if ($user) {
+            $storedHash = $user['password'];
 
-                // Handle both hashed and legacy passwords
-                if (preg_match('/^\$2y\$/', $storedHash)) {
-                    $verify = password_verify($password, $storedHash);
-                } elseif ($password === $storedHash) {
-                    // Auto-upgrade legacy password
+            $verify = false;
+            if (preg_match('/^\$2y\$/', $storedHash)) {
+                $verify = password_verify($password, $storedHash);
+            } else {
+                if ($password === $storedHash) {
                     $verify = true;
+                    // Auto-upgrade legacy password
                     $newHash = password_hash($password, PASSWORD_BCRYPT);
                     $update = $pdo->prepare("UPDATE users SET password = ? WHERE id = ?");
                     $update->execute([$newHash, $user['id']]);
                 }
-
-                if ($verify) {
-                    $_SESSION['user_id'] = $user['id'];
-                    $_SESSION['username'] = $user['username'];
-                    $_SESSION['role'] = $user['role'];
-                    header("Location: dashboard.php"); // Redirect to your main dashboard
-                    exit;
-                } else {
-                    $error = "Invalid username or password.";
-                }
-            } else {
-                $error = "Invalid username or password.";
             }
-        } catch (Exception $e) {
-            $error = "Database error: " . $e->getMessage();
+
+            if ($verify) {
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['username'] = $user['username'];
+                $_SESSION['role'] = $user['role'];
+
+                // Redirect based on role
+                switch ($user['role']) {
+                    case 'admin':
+                        header("Location: modules/admin/dashboard.php");
+                        break;
+                    case 'doctor':
+                        header("Location: modules/doctor/dashboard.php");
+                        break;
+                    case 'nurse':
+                        header("Location: modules/nurse/dashboard.php");
+                        break;
+                    case 'lab':
+                        header("Location: modules/lab/dashboard.php");
+                        break;
+                    case 'pharmacy':
+                        header("Location: modules/pharmacy/dashboard.php");
+                        break;
+                    case 'reception':
+                        header("Location: modules/reception/dashboard.php");
+                        break;
+                    default:
+                        header("Location: unauthorized.php");
+                }
+                exit;
+            } else {
+                $error = "Invalid username or password!";
+            }
+        } else {
+            $error = "No such user found.";
         }
+    } else {
+        $error = "Please enter both username and password.";
     }
 }
 ?>
@@ -56,51 +78,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: #f2f4f8;
+            background: #f9fafb;
             display: flex;
+            height: 100vh;
             justify-content: center;
             align-items: center;
-            height: 100vh;
         }
-        form {
+        .login-box {
             background: white;
             padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-            width: 300px;
-        }
-        h2 {
-            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
         input {
             width: 100%;
-            margin-bottom: 12px;
             padding: 10px;
+            margin-top: 10px;
         }
         button {
             width: 100%;
             padding: 10px;
+            margin-top: 15px;
             background: #007BFF;
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
         }
-        .error {
+        p.error {
             color: red;
-            text-align: center;
-            margin-bottom: 12px;
         }
     </style>
 </head>
 <body>
-    <form method="POST">
+    <div class="login-box">
         <h2>HMIS Login</h2>
-        <?php if (!empty($error)): ?>
-            <div class="error"><?= htmlspecialchars($error) ?></div>
+        <?php if ($error): ?>
+            <p class="error"><?= htmlspecialchars($error) ?></p>
         <?php endif; ?>
-        <input type="text" name="username" placeholder="Username" required>
-        <input type="password" name="password" placeholder="Password" required>
-        <button type="submit">Login</button>
-    </form>
+        <form method="POST">
+            <label>Username:</label>
+            <input type="text" name="username" required>
+            <label>Password:</label>
+            <input type="password" name="password" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
 </body>
 </html>
