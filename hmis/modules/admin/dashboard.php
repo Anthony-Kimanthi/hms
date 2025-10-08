@@ -75,7 +75,7 @@ checkRole(['admin']);
             <h2>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?> 👋</h2>
             <p>You are logged in as <strong><?php echo htmlspecialchars($_SESSION['role']); ?></strong>.</p>
         </div>
-
+        
         <div class="card">
             <h3>Quick Stats</h3>
             <ul>
