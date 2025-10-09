@@ -1,42 +1,56 @@
 <?php
 require_once __DIR__ . '/../../auth_check.php';
+require_once __DIR__ . '/../../config/db.php';
+
+// Restrict to admin role
 checkRole(['admin']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard | HMIS</title>
-    <link rel="stylesheet" href="../../assets/css/admin.css">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="/hmis/css/style.css">
 </head>
 <body>
-    <?php include __DIR__ . '/../../includes/sidebar.php'; ?>
 
-    <main class="content">
-        <header>
-            <h1>Admin Dashboard</h1>
-            <div class="user-info">
-                <span>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?></span> |
-                <a href="../../logout.php">Logout</a>
-            </div>
-        </header>
+    <?php include __DIR__ . '/../../includes/header.php'; ?>
+    <div class="main-container">
+        <?php include __DIR__ . '/../../includes/sidebar.php'; ?>
 
-        <section class="dashboard-cards">
-            <div class="card">
-                <h2>System Overview</h2>
-                <p>You are logged in as <strong><?php echo htmlspecialchars($_SESSION['role']); ?></strong>.</p>
-            </div>
+        <div class="content">
+            <h2>Welcome, Admin <?php echo htmlspecialchars($_SESSION['username']); ?> 👋</h2>
+            <p>This is your HMIS Admin Dashboard.</p>
 
-            <div class="card">
-                <h2>Quick Stats</h2>
-                <ul>
-                    <li>Total Users: <em>--</em></li>
-                    <li>Active Sessions: <em>--</em></li>
-                    <li>Server Time: <em><?php echo date('l, d M Y H:i'); ?></em></li>
-                </ul>
+            <div class="dashboard-cards">
+                <div class="card">
+                    <h3>Doctors</h3>
+                    <p><a href="/hmis/modules/doctor/dashboard.php">View</a></p>
+                </div>
+
+                <div class="card">
+                    <h3>Nurses</h3>
+                    <p><a href="/hmis/modules/nurse/dashboard.php">View</a></p>
+                </div>
+
+                <div class="card">
+                    <h3>Pharmacy</h3>
+                    <p><a href="/hmis/modules/pharmacy/dashboard.php">View</a></p>
+                </div>
+
+                <div class="card">
+                    <h3>Lab</h3>
+                    <p><a href="/hmis/modules/lab/dashboard.php">View</a></p>
+                </div>
+
+                <div class="card">
+                    <h3>Reports</h3>
+                    <p><a href="/hmis/reports.php">View</a></p>
+                </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </div>
+
+<script src="/hmis/js/script.js"></script>
 </body>
 </html>
