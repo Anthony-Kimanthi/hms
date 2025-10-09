@@ -1,8 +1,14 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit;
-}
+function checkRole($allowedRoles = []) {
+    if (!isset($_SESSION['role'])) {
+        header("Location: /login.php");
+        exit;
+    }
 
+    if (!in_array($_SESSION['role'], (array)$allowedRoles)) {
+        header("Location: /unauthorized.php");
+        exit;
+    }
+}
