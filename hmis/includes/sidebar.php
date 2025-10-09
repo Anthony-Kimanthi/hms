@@ -45,9 +45,6 @@ function isActive($path) {
         <li class="<?php echo isActive('/modules/appointments/'); ?>">
             <a href="/modules/appointments/dashboard.php"><i class="fas fa-calendar-check"></i> Appointments</a>
         </li>
-        <li class="<?php echo isActive('/modules/settings/'); ?>">
-            <a href="/modules/settings/dashboard.php"><i class="fas fa-cogs"></i> Settings</a>
-        </li>
     </ul>
 
     <div class="sidebar-footer">
