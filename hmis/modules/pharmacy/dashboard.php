@@ -8,7 +8,7 @@ checkRole(['pharmacy']); // change role per file
 <head>
     <meta charset="UTF-8">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="/hmis/css/style.css">
+    <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
     <?php include __DIR__ . '/../../includes/header.php'; ?>
@@ -42,6 +42,6 @@ checkRole(['pharmacy']); // change role per file
 
         </div>
     </div>
-    <script src="/hmis/js/script.js"></script>
+    <script src="../../js/script.js"></script>
 </body>
 </html>
