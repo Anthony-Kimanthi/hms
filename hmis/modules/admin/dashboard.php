@@ -1,58 +1,52 @@
 <?php
 require_once __DIR__ . '/../../auth_check.php';
-checkRole(['admin']);
+require_once __DIR__ . '/../../config/db.php';
+checkRole(['admin']); // change role per file
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="../../css/style.css">
-    <script src="../../js/script.js" defer></script>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/hmis/css/style.css">
 </head>
 <body>
+    <?php include __DIR__ . '/../../includes/header.php'; ?>
+    <div class="main-container">
+        <?php include __DIR__ . '/../../includes/sidebar.php'; ?>
+        <div class="content with-header">
+            <!-- role-specific content here -->
+            <div class="content with-header">
+    <h2>Welcome, Admin <?php echo htmlspecialchars($_SESSION['username']); ?> 👋</h2>
+    <p>System overview and quick management links:</p>
 
-    <!-- Sidebar -->
-    <?php include '../../includes/sidebar.php'; ?>
-
-    <!-- Header -->
-    <div class="header">
-        <span id="menu-toggle" class="menu-toggle">☰</span>
-        <h1>Admin Dashboard</h1>
-    </div>
-
-    <!-- Main Content -->
-    <div class="content with-header">
-        <h2>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?> 👋</h2>
-        <p>Here's an overview of the system activity and quick access to management tools.</p>
-
-        <!-- Dashboard Cards -->
-        <div class="dashboard-cards">
-            <div class="card">
-                <h3>Users</h3>
-                <p>Manage system users</p>
-                <a href="../users/dashboard.php">Open</a>
-            </div>
-
-            <div class="card">
-                <h3>Reports</h3>
-                <p>View system reports</p>
-                <a href="../reports/dashboard.php">Open</a>
-            </div>
-
-            <div class="card">
-                <h3>Settings</h3>
-                <p>System configuration</p>
-                <a href="../settings/dashboard.php">Access</a>
-            </div>
-
-            <div class="card">
-                <h3>Database</h3>
-                <p>Backup & maintenance</p>
-                <a href="../database/dashboard.php">Manage</a>
-            </div>
+    <div class="dashboard-cards">
+        <div class="card">
+            <h3>Users</h3>
+            <p>Manage all system users.</p>
+            <a href="/hmis/modules/users/dashboard.php">Open</a>
+        </div>
+        <div class="card">
+            <h3>System Logs</h3>
+            <p>Monitor security and access logs.</p>
+            <a href="/hmis/modules/logs/dashboard.php">View Logs</a>
+        </div>
+        <div class="card">
+            <h3>Reports</h3>
+            <p>Access global hospital reports.</p>
+            <a href="/hmis/modules/reports/dashboard.php">Reports</a>
+        </div>
+        <div class="card">
+            <h3>Settings</h3>
+            <p>Configure modules and system parameters.</p>
+            <a href="/hmis/modules/settings/dashboard.php">Settings</a>
         </div>
     </div>
+</div>
 
+        </div>
+    </div>
+    <script src="/hmis/js/script.js"></script>
 </body>
 </html>
+
