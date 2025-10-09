@@ -1,19 +1,9 @@
 <?php
-session_start();
-require_once __DIR__ . '/../../config/db.php';
+require_once __DIR__ . '/../../auth_check.php';
 
-// --- Role Check Function ---
-function checkRole($role) {
-    if (!isset($_SESSION['role']) || $_SESSION['role'] !== $role) {
-        header("Location: /unauthorized.php");
-        exit;
-    }
-}
-
-// --- Require Admin Role ---
-checkRole('admin');
+// Allow only admin users
+checkRole(['admin']);
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,10 +14,8 @@ checkRole('admin');
 </head>
 <body>
 
-    <!-- Sidebar -->
     <?php include __DIR__ . '/../../includes/sidebar.php'; ?>
 
-    <!-- Main Content -->
     <div class="content with-header">
         <div class="header">
             <span id="menu-toggle" class="menu-toggle">☰</span>
@@ -57,12 +45,6 @@ checkRole('admin');
                 <h3>System Settings</h3>
                 <p>Configure global HMIS settings and backups.</p>
                 <a href="settings.php">Go</a>
-            </div>
-
-            <div class="card">
-                <h3>Logout</h3>
-                <p>Sign out of the admin session securely.</p>
-                <a href="/logout.php" class="btn btn-danger">Logout</a>
             </div>
         </div>
     </div>
