@@ -9,8 +9,8 @@ checkRole(['admin']);
 <head>
     <meta charset="UTF-8">
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="/assets/css/style.css">
-    <script src="/assets/js/script.js" defer></script>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/script.js" defer></script>
 </head>
 <body>
 
