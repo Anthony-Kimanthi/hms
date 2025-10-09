@@ -1,71 +1,56 @@
 <?php
-session_start();
-$current_page = basename($_SERVER['PHP_SELF']);
-$user_role = $_SESSION['role'] ?? 'guest'; // fallback for safety
+// Sidebar navigation component
+
+// Get the current script path (e.g. /modules/admin/dashboard.php)
+$current_page = $_SERVER['PHP_SELF'];
+
+// Helper function to check if a menu item should be active
+function isActive($path) {
+    global $current_page;
+    return (strpos($current_page, $path) !== false) ? 'active' : '';
+}
 ?>
 
-<div class="sidebar" id="sidebar">
-    <h2>HMIS</h2>
-    <ul>
-        <!-- Common to all logged-in users -->
-        <li><a href="/home.php" class="<?= $current_page === 'home.php' ? 'active' : '' ?>">
-            <i class="fas fa-home"></i> Home
-        </a></li>
+<nav id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+        <h3>HMIS Portal</h3>
+        <button id="menu-toggle" class="menu-toggle">☰</button>
+    </div>
 
-        <?php if ($user_role === 'admin'): ?>
-            <li><a href="/modules/admin/dashboard.php" class="<?= strpos($_SERVER['REQUEST_URI'], '/modules/admin/') !== false ? 'active' : '' ?>">
-                <i class="fas fa-user-shield"></i> Admin Dashboard
-            </a></li>
-            <li><a href="/modules/users/dashboard.php" class="<?= strpos($_SERVER['REQUEST_URI'], '/modules/users/') !== false ? 'active' : '' ?>">
-                <i class="fas fa-users"></i> Manage Users
-            </a></li>
-            <li><a href="/modules/reports/dashboard.php" class="<?= strpos($_SERVER['REQUEST_URI'], '/modules/reports/') !== false ? 'active' : '' ?>">
-                <i class="fas fa-chart-bar"></i> Reports
-            </a></li>
-            <li><a href="/modules/settings/dashboard.php" class="<?= strpos($_SERVER['REQUEST_URI'], '/modules/settings/') !== false ? 'active' : '' ?>">
-                <i class="fas fa-cogs"></i> Settings
-            </a></li>
-            <li><a href="/modules/database/dashboard.php" class="<?= strpos($_SERVER['REQUEST_URI'], '/modules/database/') !== false ? 'active' : '' ?>">
-                <i class="fas fa-database"></i> Database
-            </a></li>
-
-        <?php elseif ($user_role === 'doctor'): ?>
-            <li><a href="/modules/patients/dashboard.php" class="<?= strpos($_SERVER['REQUEST_URI'], '/modules/patients/') !== false ? 'active' : '' ?>">
-                <i class="fas fa-user-md"></i> Patients
-            </a></li>
-            <li><a href="/modules/reports/dashboard.php" class="<?= strpos($_SERVER['REQUEST_URI'], '/modules/reports/') !== false ? 'active' : '' ?>">
-                <i class="fas fa-file-medical"></i> Reports
-            </a></li>
-
-        <?php elseif ($user_role === 'nurse'): ?>
-            <li><a href="/modules/patients/dashboard.php" class="<?= strpos($_SERVER['REQUEST_URI'], '/modules/patients/') !== false ? 'active' : '' ?>">
-                <i class="fas fa-procedures"></i> Ward Management
-            </a></li>
-            <li><a href="/modules/reports/dashboard.php" class="<?= strpos($_SERVER['REQUEST_URI'], '/modules/reports/') !== false ? 'active' : '' ?>">
-                <i class="fas fa-notes-medical"></i> Daily Reports
-            </a></li>
-
-        <?php elseif ($user_role === 'tech'): ?>
-            <li><a href="/modules/maintenance/dashboard.php" class="<?= strpos($_SERVER['REQUEST_URI'], '/modules/maintenance/') !== false ? 'active' : '' ?>">
-                <i class="fas fa-tools"></i> System Maintenance
-            </a></li>
-            <li><a href="/modules/logs/dashboard.php" class="<?= strpos($_SERVER['REQUEST_URI'], '/modules/logs/') !== false ? 'active' : '' ?>">
-                <i class="fas fa-terminal"></i> Logs
-            </a></li>
-
-        <?php else: ?>
-            <li><a href="/login.php"><i class="fas fa-sign-in-alt"></i> Login</a></li>
-        <?php endif; ?>
+    <ul class="sidebar-menu">
+        <li class="<?php echo isActive('/modules/admin/'); ?>">
+            <a href="/modules/admin/dashboard.php"><i class="fas fa-user-shield"></i> Admin</a>
+        </li>
+        <li class="<?php echo isActive('/modules/billing/'); ?>">
+            <a href="/modules/billing/dashboard.php"><i class="fas fa-file-invoice-dollar"></i> Billing</a>
+        </li>
+        <li class="<?php echo isActive('/modules/pharmacy/'); ?>">
+            <a href="/modules/pharmacy/dashboard.php"><i class="fas fa-pills"></i> Pharmacy</a>
+        </li>
+        <li class="<?php echo isActive('/modules/laboratory/'); ?>">
+            <a href="/modules/laboratory/dashboard.php"><i class="fas fa-vial"></i> Laboratory</a>
+        </li>
+        <li class="<?php echo isActive('/modules/radiology/'); ?>">
+            <a href="/modules/radiology/dashboard.php"><i class="fas fa-x-ray"></i> Radiology</a>
+        </li>
+        <li class="<?php echo isActive('/modules/reports/'); ?>">
+            <a href="/modules/reports/dashboard.php"><i class="fas fa-chart-line"></i> Reports</a>
+        </li>
+        <li class="<?php echo isActive('/modules/inventory/'); ?>">
+            <a href="/modules/inventory/dashboard.php"><i class="fas fa-boxes"></i> Inventory</a>
+        </li>
+        <li class="<?php echo isActive('/modules/patients/'); ?>">
+            <a href="/modules/patients/dashboard.php"><i class="fas fa-users"></i> Patients</a>
+        </li>
+        <li class="<?php echo isActive('/modules/appointments/'); ?>">
+            <a href="/modules/appointments/dashboard.php"><i class="fas fa-calendar-check"></i> Appointments</a>
+        </li>
+        <li class="<?php echo isActive('/modules/settings/'); ?>">
+            <a href="/modules/settings/dashboard.php"><i class="fas fa-cogs"></i> Settings</a>
+        </li>
     </ul>
 
     <div class="sidebar-footer">
-        <?php if (isset($_SESSION['username'])): ?>
-            <a href="/logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
-        <?php else: ?>
-            <a href="/login.php"><i class="fas fa-sign-in-alt"></i> Login</a>
-        <?php endif; ?>
+        <a href="/logout.php" class="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </div>
-</div>
-
-<!-- Font Awesome for icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</nav>
