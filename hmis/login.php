@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($user) {
             $storedHash = $user['password'];
 
-            $verify = false;
+            $verify = true;
             if (preg_match('/^\$2y\$/', $storedHash)) {
                 $verify = password_verify($password, $storedHash);
             } else {
