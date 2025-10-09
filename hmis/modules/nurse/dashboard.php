@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../../auth_check.php';
 require_once __DIR__ . '/../../config/db.php';
-checkRole(['admin']); // change role per file
+checkRole(['nurse']); // change role per file
 ?>
 <!DOCTYPE html>
 <html lang="en">
