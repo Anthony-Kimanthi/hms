@@ -10,47 +10,54 @@ checkRole(['admin']);
 <head>
     <meta charset="UTF-8">
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="/hmis/css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
     <?php include __DIR__ . '/../../includes/header.php'; ?>
+
     <div class="main-container">
         <?php include __DIR__ . '/../../includes/sidebar.php'; ?>
 
         <div class="content">
-            <h2>Welcome, Admin <?php echo htmlspecialchars($_SESSION['username']); ?> 👋</h2>
-            <p>This is your HMIS Admin Dashboard.</p>
+            <h2>Welcome, Admin <?= htmlspecialchars($_SESSION['username']); ?> 👋</h2>
+            <p>This is your central HMIS Administration Dashboard.</p>
 
             <div class="dashboard-cards">
                 <div class="card">
+                    <i class="fa-solid fa-user-doctor"></i>
                     <h3>Doctors</h3>
-                    <p><a href="/hmis/modules/doctor/dashboard.php">View</a></p>
+                    <a href="/modules/doctors.php" class="btn">Manage</a>
                 </div>
 
                 <div class="card">
+                    <i class="fa-solid fa-user-nurse"></i>
                     <h3>Nurses</h3>
-                    <p><a href="/hmis/modules/nurse/dashboard.php">View</a></p>
+                    <a href="/modules/triage.php" class="btn">Manage</a>
                 </div>
 
                 <div class="card">
+                    <i class="fa-solid fa-pills"></i>
                     <h3>Pharmacy</h3>
-                    <p><a href="/hmis/modules/pharmacy/dashboard.php">View</a></p>
+                    <a href="/modules/pharmacy.php" class="btn">Manage</a>
                 </div>
 
                 <div class="card">
+                    <i class="fa-solid fa-flask-vial"></i>
                     <h3>Lab</h3>
-                    <p><a href="/hmis/modules/lab/dashboard.php">View</a></p>
+                    <a href="/modules/lab.php" class="btn">Manage</a>
                 </div>
 
                 <div class="card">
+                    <i class="fa-solid fa-file-medical"></i>
                     <h3>Reports</h3>
-                    <p><a href="/hmis/reports.php">View</a></p>
+                    <a href="/modules/reports.php" class="btn">View Reports</a>
                 </div>
             </div>
         </div>
     </div>
 
-<script src="/hmis/js/script.js"></script>
+<script src="/js/script.js"></script>
 </body>
 </html>
