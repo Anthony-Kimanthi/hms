@@ -1,20 +1,218 @@
-/* RESPONSIVE SIDEBAR */
-@media (max-width: 768px) {
-    .sidebar {
-        left: -220px;
-    }
-    .sidebar.show {
-        left: 0;
-    }
-    .content, .header {
-        margin-left: 0;
-    }
-    .menu-toggle {
-        display: block;
-    }
+/* =========================
+   GENERAL BODY
+========================= */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    background-color: #f4f6f8;
+    color: #333;
 }
 
-/* DASHBOARD CARDS */
+/* =========================
+   HEADER
+========================= */
+.header {
+    position: fixed;
+    top: 0;
+    left: 220px;
+    right: 0;
+    height: 60px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 1000;
+}
+
+.header .logo {
+    height: 40px;
+    margin-right: 15px;
+}
+
+.header h1 {
+    font-size: 22px;
+    margin: 0;
+    color: #333;
+}
+
+.menu-toggle {
+    display: none;
+    cursor: pointer;
+    font-size: 1.6em;
+    margin-right: 15px;
+    color: #2C3E50;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+.sidebar {
+    width: 220px;
+    background: #2C3E50;
+    color: #ECF0F1;
+    height: 100vh;
+    padding: 20px 0;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    transition: left 0.3s ease;
+    z-index: 2000;
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    margin-bottom: 30px;
+}
+
+.sidebar-header h3 {
+    margin: 0;
+    font-size: 1.4em;
+    color: #ECF0F1;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.sidebar ul li {
+    margin: 5px 10px;
+}
+
+.sidebar ul li a {
+    display: flex;
+    align-items: center;
+    color: #ECF0F1;
+    text-decoration: none;
+    padding: 12px 15px;
+    border-radius: 6px;
+    transition: background 0.3s, color 0.3s;
+}
+
+.sidebar ul li a i {
+    margin-right: 10px;
+    font-size: 1.1em;
+}
+
+/* Hover + Active Effects */
+.sidebar ul li a:hover {
+    background-color: #34495E;
+    color: #1ABC9C;
+}
+
+.sidebar ul li.active a {
+    background-color: #1ABC9C;
+    color: #fff;
+    font-weight: bold;
+}
+
+.sidebar ul li.active a i {
+    color: #fff;
+}
+
+/* =========================
+   SIDEBAR FOOTER (Logout)
+========================= */
+.sidebar-footer {
+    margin-top: auto;
+    padding: 15px 20px;
+}
+
+.sidebar-footer a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    background: #E74C3C;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.sidebar-footer a i {
+    margin-right: 8px;
+}
+
+.sidebar-footer a:hover {
+    background: #C0392B;
+}
+
+/* =========================
+   MAIN CONTENT
+========================= */
+.content {
+    margin-left: 220px;
+    padding: 20px;
+    flex-grow: 1;
+    min-height: 100vh;
+    background-color: #f4f6f8;
+}
+
+.content.with-header {
+    margin-top: 60px;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+.btn {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.95em;
+    transition: 0.3s;
+}
+
+.btn-primary { background-color: #007bff; color: #fff; }
+.btn-primary:hover { background-color: #0069d9; }
+.btn-success { background-color: #28a745; color: #fff; }
+.btn-danger { background-color: #dc3545; color: #fff; }
+
+/* =========================
+   ALERTS
+========================= */
+.alert {
+    padding: 12px 20px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    color: #fff;
+}
+.alert-success { background-color: #28a745; }
+.alert-error { background-color: #dc3545; }
+.alert-info { background-color: #17a2b8; }
+
+/* =========================
+   TABLES
+========================= */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+table th {
+    background-color: #34495E;
+    color: #fff;
+}
+
+/* =========================
+   DASHBOARD CARDS
+========================= */
 .dashboard-cards {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -56,14 +254,26 @@
     background-color: #16A085;
 }
 
-/* MAIN CONTAINER */
-.main-container {
-    display: flex;
-    flex-direction: row;
-}
-
-/* Optional tweak for mobile */
+/* =========================
+   RESPONSIVE STYLES
+========================= */
 @media (max-width: 768px) {
+    .sidebar {
+        left: -220px;
+    }
+
+    .sidebar.show {
+        left: 0;
+    }
+
+    .content, .header {
+        margin-left: 0;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
     .dashboard-cards {
         grid-template-columns: 1fr;
     }
