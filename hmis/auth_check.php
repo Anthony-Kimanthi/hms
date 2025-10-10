@@ -1,5 +1,8 @@
 <?php
-session_start();
+// Start session only if none is active
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 function checkRole($allowedRoles = []) {
     if (!isset($_SESSION['role'])) {
