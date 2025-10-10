@@ -1,24 +1,16 @@
 <?php
 session_start();
-require_once __DIR__ . '/../../config/db.php';
+require_once __DIR__ . '/../../auth_check.php';
 
-// Role check helper
-function checkRole($requiredRole) {
-    if (!isset($_SESSION['role']) || $_SESSION['role'] !== $requiredRole) {
-        header("Location: ../../unauthorized.php");
-        exit;
-    }
-}
-
-// ✅ Restrict to Admins only
-checkRole('admin');
+// ✅ Allow Admins and Nurses
+checkRole(['admin', 'nurse']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard | HMIS</title>
+    <title>Pharmacy Dashboard | HMIS</title>
 
     <!-- CSS -->
     <link rel="stylesheet" href="../../css/style.css">
@@ -42,7 +34,7 @@ checkRole('admin');
 
         .dashboard-container {
             flex: 1;
-            margin-left: 250px;
+            margin-left: 250px; /* ✅ Fix sidebar spacing */
             padding: 2rem;
         }
 
@@ -114,43 +106,31 @@ checkRole('admin');
     <?php include '../../includes/sidebar.php'; ?>
 
     <div class="dashboard-container">
-        <h1><i class="fa-solid fa-user-shield"></i> Admin Dashboard</h1>
+        <h1><i class="fa-solid fa-pills"></i> Pharmacy Dashboard</h1>
 
         <div class="dashboard-grid">
             <div class="card">
-                <h3><i class="fa-solid fa-users-gear"></i> Manage Users</h3>
-                <p>Add, edit, and remove system user accounts.</p>
-                <a href="users.php">Go</a>
+                <h3><i class="fa-solid fa-prescription-bottle-medical"></i> Prescriptions</h3>
+                <p>View and process patient prescriptions.</p>
+                <a href="prescriptions.php">View</a>
             </div>
 
             <div class="card">
-                <h3><i class="fa-solid fa-x-ray"></i> Radiology</h3>
-                <p>Manage radiology reports and imaging data.</p>
-                <a href="../radiology/dashboard.php">Go</a>
+                <h3><i class="fa-solid fa-boxes-stacked"></i> Stock</h3>
+                <p>Manage and update the drug inventory.</p>
+                <a href="inventory.php">Inventory</a>
             </div>
 
             <div class="card">
                 <h3><i class="fa-solid fa-chart-line"></i> Reports</h3>
-                <p>View system-wide statistics and reports.</p>
-                <a href="../reports/dashboard.php">Go</a>
+                <p>Track usage and stock-level reports.</p>
+                <a href="reports.php">Reports</a>
             </div>
 
             <div class="card">
-                <h3><i class="fa-solid fa-gears"></i> System Settings</h3>
-                <p>Configure HMIS settings, backups, and roles.</p>
-                <a href="settings.php">Go</a>
-            </div>
-
-            <div class="card">
-                <h3><i class="fa-solid fa-users"></i> Patients</h3>
-                <p>View, register, and manage patient records.</p>
-                <a href="../patients/dashboard.php">Go</a>
-            </div>
-
-            <div class="card">
-                <h3><i class="fa-solid fa-prescription-bottle-medical"></i> Pharmacy</h3>
-                <p>Manage pharmacy stock and prescriptions.</p>
-                <a href="../pharmacy/dashboard.php">Go</a>
+                <h3><i class="fa-solid fa-syringe"></i> Supplies</h3>
+                <p>Manage medical supplies and logistics.</p>
+                <a href="supplies.php">Manage</a>
             </div>
         </div>
     </div>
