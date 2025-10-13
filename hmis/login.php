@@ -1,4 +1,16 @@
 <?php
+// --- DEV MODE: Skip login entirely ---
+$DEV_MODE = true; // change to false later when done
+
+if ($DEV_MODE) {
+    session_start();
+    $_SESSION['username'] = 'DevUser';
+    $_SESSION['role'] = 'admin'; // you can change this
+    header("Location: modules/admin/dashboard.php");
+    exit;
+}
+?>
+
 session_start();
 require_once __DIR__ . '/config/db.php';
 
