@@ -1,66 +1,145 @@
 <?php
-// Example: for Patients module
-$pageTitle = "Patients";
+require_once '../../config/db.php';
+$pageTitle = "Patients Dashboard";
 $pageHeader = "Patients";
 $pageDescription = "Manage and view registered patients.";
 
-// Dynamically determine the project root path
-$rootPath = dirname(__DIR__, 2); // Go up 2 levels from /modules/patients/
-include_once "$rootPath/includes/header.php";
-include_once "$rootPath/includes/sidebar.php";
+// Fetch all patients
+$result = $conn->query("SELECT * FROM patients ORDER BY id DESC");
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title><?= $pageTitle ?> - InfiHealth HMIS</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <title><?= $pageTitle ?> - HMIS</title>
+    <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            display: flex;
+        }
+
+        .content {
+            flex: 1;
+            margin-left: 250px;
+            padding: 2rem;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #007bff;
+            color: #fff;
+        }
+
+        tr:hover {
+            background: #f1f1f1;
+        }
+
+        a.btn {
+            display: inline-block;
+            padding: 8px 12px;
+            color: #fff;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .btn-add {
+            background: #28a745;
+        }
+
+        .btn-edit {
+            background: #ffc107;
+        }
+
+        .btn-del {
+            background: #dc3545;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .success-msg {
+            background: #d1e7dd;
+            color: #0f5132;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+    </style>
 </head>
 <body>
+    <?php include '../../includes/sidebar.php'; ?>
 
-    <div class="content with-header">
-        <h1><?= $pageHeader ?></h1>
+    <div class="content">
+        <h1><i class="fa-solid fa-users"></i> <?= $pageHeader ?></h1>
         <p><?= $pageDescription ?></p>
 
-        <section class="patients-overview">
-            <h2>Patient Overview</h2>
-            <p>Below is a quick overview of patients in the system.</p>
+        <?php if (isset($_GET['success'])): ?>
+            <div class="success-msg">✅ Patient saved successfully.</div>
+        <?php endif; ?>
 
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Patient Name</th>
-                        <th>Gender</th>
-                        <th>Age</th>
-                        <th>Phone</th>
-                        <th>Date Registered</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Mary Njeri</td>
-                        <td>Female</td>
-                        <td>32</td>
-                        <td>0712345678</td>
-                        <td>2025-10-10</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>John Otieno</td>
-                        <td>Male</td>
-                        <td>28</td>
-                        <td>0722334455</td>
-                        <td>2025-09-28</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+        <a href="add_edit.php" class="btn btn-add"><i class="fa-solid fa-user-plus"></i> Add Patient</a>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Full Name</th>
+                    <th>Gender</th>
+                    <th>Age</th>
+                    <th>Phone</th>
+                    <th>Address</th>
+                    <th>Date Registered</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php if ($result->num_rows > 0): 
+                $i = 1;
+                while ($row = $result->fetch_assoc()): ?>
+                <tr>
+                    <td><?= $i++ ?></td>
+                    <td><?= htmlspecialchars($row['fullname']) ?></td>
+                    <td><?= htmlspecialchars($row['gender']) ?></td>
+                    <td><?= htmlspecialchars($row['age']) ?></td>
+                    <td><?= htmlspecialchars($row['phone']) ?></td>
+                    <td><?= htmlspecialchars($row['address']) ?></td>
+                    <td><?= htmlspecialchars($row['date_registered']) ?></td>
+                    <td class="actions">
+                        <a href="edit_patient.php?id=<?= $row['id'] ?>" class="btn btn-edit">Edit</a>
+                        <a href="delete_patient.php?id=<?= $row['id'] ?>" class="btn btn-del" onclick="return confirm('Delete this patient?')">Delete</a>
+                    </td>
+                </tr>
+                <?php endwhile; else: ?>
+                <tr><td colspan="8">No patients found.</td></tr>
+            <?php endif; ?>
+            </tbody>
+        </table>
     </div>
-
-    <script src="/js/script.js"></script>
 </body>
 </html>
