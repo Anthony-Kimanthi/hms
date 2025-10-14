@@ -1,17 +1,23 @@
 <?php
-require_once '../../config/db.php';
+require_once '../../config/db.php'; // uses $pdo from your db.php
+
 $pageTitle = "Patients Dashboard";
 $pageHeader = "Patients";
 $pageDescription = "Manage and view registered patients.";
 
 // Fetch all patients
-$result = $conn->query("SELECT * FROM patients ORDER BY id DESC");
+try {
+    $stmt = $pdo->query("SELECT * FROM patients ORDER BY id DESC");
+    $patients = $stmt->fetchAll();
+} catch (PDOException $e) {
+    die("Database query failed: " . $e->getMessage());
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title><?= $pageTitle ?> - HMIS</title>
+    <title><?= htmlspecialchars($pageTitle) ?> - HMIS</title>
     <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
@@ -66,17 +72,9 @@ $result = $conn->query("SELECT * FROM patients ORDER BY id DESC");
             font-size: 0.9rem;
         }
 
-        .btn-add {
-            background: #28a745;
-        }
-
-        .btn-edit {
-            background: #ffc107;
-        }
-
-        .btn-del {
-            background: #dc3545;
-        }
+        .btn-add { background: #28a745; }
+        .btn-edit { background: #ffc107; }
+        .btn-del { background: #dc3545; }
 
         .actions {
             display: flex;
@@ -96,8 +94,8 @@ $result = $conn->query("SELECT * FROM patients ORDER BY id DESC");
     <?php include '../../includes/sidebar.php'; ?>
 
     <div class="content">
-        <h1><i class="fa-solid fa-users"></i> <?= $pageHeader ?></h1>
-        <p><?= $pageDescription ?></p>
+        <h1><i class="fa-solid fa-users"></i> <?= htmlspecialchars($pageHeader) ?></h1>
+        <p><?= htmlspecialchars($pageDescription) ?></p>
 
         <?php if (isset($_GET['success'])): ?>
             <div class="success-msg">✅ Patient saved successfully.</div>
@@ -119,9 +117,9 @@ $result = $conn->query("SELECT * FROM patients ORDER BY id DESC");
                 </tr>
             </thead>
             <tbody>
-            <?php if ($result->num_rows > 0): 
+            <?php if (count($patients) > 0): 
                 $i = 1;
-                while ($row = $result->fetch_assoc()): ?>
+                foreach ($patients as $row): ?>
                 <tr>
                     <td><?= $i++ ?></td>
                     <td><?= htmlspecialchars($row['fullname']) ?></td>
@@ -135,7 +133,7 @@ $result = $conn->query("SELECT * FROM patients ORDER BY id DESC");
                         <a href="delete_patient.php?id=<?= $row['id'] ?>" class="btn btn-del" onclick="return confirm('Delete this patient?')">Delete</a>
                     </td>
                 </tr>
-                <?php endwhile; else: ?>
+                <?php endforeach; else: ?>
                 <tr><td colspan="8">No patients found.</td></tr>
             <?php endif; ?>
             </tbody>
