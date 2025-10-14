@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $stmt = $pdo->prepare("INSERT INTO patient_details (title, first_name, second_name, last_name, date_of_birth)
             VALUES (?, ?, ?, ?, ?)");
-        $stmt->execute([$title, $first_name, $second_name, $last_name, $date_of_birth]);
+        $stmt->execute([$title, $first_name, $second_name, $last_name, $date_of_birth, $age]);
         header("Location: dashboard.php?success=added");
         exit;
     }
