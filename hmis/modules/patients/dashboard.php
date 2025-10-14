@@ -1,23 +1,14 @@
 <?php
-require_once '../../config/db.php'; // uses $pdo from your db.php
-
+require_once '../../config/db.php';
 $pageTitle = "Patients Dashboard";
-$pageHeader = "Patients";
-$pageDescription = "Manage and view registered patients.";
-
-// Fetch all patients
-try {
-    $stmt = $pdo->query("SELECT * FROM patients ORDER BY id DESC");
-    $patients = $stmt->fetchAll();
-} catch (PDOException $e) {
-    die("Database query failed: " . $e->getMessage());
-}
+$pageHeader = "Patient Demographics ";
+$pageDescription = "Manage patient registration and search existing records.";
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title><?= htmlspecialchars($pageTitle) ?> - HMIS</title>
+    <title><?= $pageTitle ?> - HMIS</title>
     <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
@@ -31,62 +22,60 @@ try {
         .content {
             flex: 1;
             margin-left: 250px;
-            padding: 2rem;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
         }
 
         h1 {
             color: #333;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
+        p {
+            color: #666;
+            margin-bottom: 2rem;
         }
 
-        th, td {
-            padding: 12px 15px;
-            border-bottom: 1px solid #ddd;
-            text-align: left;
-        }
-
-        th {
-            background: #007bff;
-            color: #fff;
-        }
-
-        tr:hover {
-            background: #f1f1f1;
-        }
-
-        a.btn {
+        .btn {
             display: inline-block;
-            padding: 8px 12px;
+            padding: 10px 18px;
             color: #fff;
             border-radius: 6px;
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.9rem;
+            margin: 0 10px;
+            font-size: 1rem;
         }
 
-        .btn-add { background: #28a745; }
-        .btn-edit { background: #ffc107; }
-        .btn-del { background: #dc3545; }
+        .btn-add {
+            background: #28a745;
+        }
 
-        .actions {
+        .search-box {
             display: flex;
             gap: 10px;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1.5rem;
         }
 
-        .success-msg {
-            background: #d1e7dd;
-            color: #0f5132;
+        .search-box input[type="text"] {
             padding: 10px;
+            width: 280px;
             border-radius: 6px;
-            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+        }
+
+        .btn-search {
+            background: #007bff;
+        }
+
+        .btn-search i {
+            margin-right: 6px;
         }
     </style>
 </head>
@@ -94,50 +83,19 @@ try {
     <?php include '../../includes/sidebar.php'; ?>
 
     <div class="content">
-        <h1><i class="fa-solid fa-users"></i> <?= htmlspecialchars($pageHeader) ?></h1>
-        <p><?= htmlspecialchars($pageDescription) ?></p>
+        <h1><i class="fa-solid fa-users"></i> <?= $pageHeader ?></h1>
+        <p><?= $pageDescription ?></p>
 
-        <?php if (isset($_GET['success'])): ?>
-            <div class="success-msg">✅ Patient saved successfully.</div>
-        <?php endif; ?>
+        <a href="add_edit.php" class="btn btn-add">
+            <i class="fa-solid fa-user-plus"></i> Register New Patient
+        </a>
 
-        <a href="add_edit.php" class="btn btn-add"><i class="fa-solid fa-user-plus"></i> Add Patient</a>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Full Name</th>
-                    <th>Gender</th>
-                    <th>Age</th>
-                    <th>Phone</th>
-                    <th>Address</th>
-                    <th>Date Registered</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-            <?php if (count($patients) > 0): 
-                $i = 1;
-                foreach ($patients as $row): ?>
-                <tr>
-                    <td><?= $i++ ?></td>
-                    <td><?= htmlspecialchars($row['fullname']) ?></td>
-                    <td><?= htmlspecialchars($row['gender']) ?></td>
-                    <td><?= htmlspecialchars($row['age']) ?></td>
-                    <td><?= htmlspecialchars($row['phone']) ?></td>
-                    <td><?= htmlspecialchars($row['address']) ?></td>
-                    <td><?= htmlspecialchars($row['date_registered']) ?></td>
-                    <td class="actions">
-                        <a href="edit_patient.php?id=<?= $row['id'] ?>" class="btn btn-edit">Edit</a>
-                        <a href="delete_patient.php?id=<?= $row['id'] ?>" class="btn btn-del" onclick="return confirm('Delete this patient?')">Delete</a>
-                    </td>
-                </tr>
-                <?php endforeach; else: ?>
-                <tr><td colspan="8">No patients found.</td></tr>
-            <?php endif; ?>
-            </tbody>
-        </table>
+        <form action="search.php" method="GET" class="search-box">
+            <input type="text" name="query" placeholder="Search patient by name, phone, or ID..." required>
+            <button type="submit" class="btn btn-search">
+                <i class="fa-solid fa-magnifying-glass"></i> Search
+            </button>
+        </form>
     </div>
 </body>
 </html>
