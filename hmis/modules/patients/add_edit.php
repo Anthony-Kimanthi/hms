@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $age = date_diff(date_create($date_of_birth), date_create('today'))->y;
 
     try {
-        $stmt = $conn->prepare("
+        $stmt = $pdo->prepare("
             INSERT INTO patient_details (title, first_name, second_name, last_name, date_of_birth, age)
             VALUES (:title, :first_name, :second_name, :last_name, :date_of_birth, :age)
         ");
