@@ -3,45 +3,45 @@ require_once '../../config/db.php';
 
 $pageTitle = "Add / Edit Patient";
 $pageHeader = "Patient Registration";
-$editing = isset($_GET['id']); // check if editing
+$editing = isset($_GET['id']);
 
-// Initialize variables
-$id = $fullname = $gender = $age = $phone = $address = "";
+$id = $title = $first_name = $second_name = $last_name = $date_of_birth = "";
 
-// If editing, fetch patient details
 if ($editing) {
-    $stmt = $pdo->prepare("SELECT * FROM patients WHERE id = ?");
+    $stmt = $pdo->prepare("SELECT * FROM patient_details WHERE id = ?");
     $stmt->execute([$_GET['id']]);
     $patient = $stmt->fetch();
 
     if ($patient) {
         $id = $patient['id'];
-        $fullname = $patient['fullname'];
-        $gender = $patient['gender'];
-        $age = $patient['age'];
-        $phone = $patient['phone'];
-        $address = $patient['address'];
+        $title = $patient['title'];
+        $first_name = $patient['first_name'];
+        $second_name = $patient['second_name'];
+        $last_name = $patient['last_name'];
+        $date_of_birth = $patient['date_of_birth'];
     } else {
         die("Patient not found.");
     }
 }
 
-// Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $fullname = $_POST['fullname'];
-    $gender = $_POST['gender'];
-    $age = $_POST['age'];
-    $phone = $_POST['phone'];
-    $address = $_POST['address'];
+    $title = $_POST['title'];
+    $first_name = $_POST['first_name'];
+    $second_name = $_POST['second_name'] ?: null;
+    $last_name = $_POST['last_name'];
+    $date_of_birth = $_POST['date_of_birth'];
 
     if ($editing) {
-        $stmt = $pdo->prepare("UPDATE patients SET fullname=?, gender=?, age=?, phone=?, address=? WHERE id=?");
-        $stmt->execute([$fullname, $gender, $age, $phone, $address, $id]);
+        $stmt = $pdo->prepare("UPDATE patient_details 
+            SET title=?, first_name=?, second_name=?, last_name=?, date_of_birth=? 
+            WHERE id=?");
+        $stmt->execute([$title, $first_name, $second_name, $last_name, $date_of_birth, $id]);
         header("Location: dashboard.php?success=updated");
         exit;
     } else {
-        $stmt = $pdo->prepare("INSERT INTO patients (fullname, gender, age, phone, address, date_registered) VALUES (?, ?, ?, ?, ?, NOW())");
-        $stmt->execute([$fullname, $gender, $age, $phone, $address]);
+        $stmt = $pdo->prepare("INSERT INTO patient_details (title, first_name, second_name, last_name, date_of_birth)
+            VALUES (?, ?, ?, ?, ?)");
+        $stmt->execute([$title, $first_name, $second_name, $last_name, $date_of_birth]);
         header("Location: dashboard.php?success=added");
         exit;
     }
@@ -123,6 +123,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border-radius: 6px;
             margin-left: 10px;
         }
+
+        .age-field {
+            background: #e9ecef;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
@@ -132,28 +137,66 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h1><i class="fa-solid fa-user-plus"></i> <?= $editing ? "Edit Patient" : "Register New Patient" ?></h1>
 
         <form method="POST">
-            <label>Full Name</label>
-            <input type="text" name="fullname" value="<?= htmlspecialchars($fullname) ?>" required>
-
-            <label>Gender</label>
-            <select name="gender" required>
+            <label>Title</label>
+            <select name="title" required>
                 <option value="">-- Select --</option>
-                <option value="Male" <?= $gender == 'Male' ? 'selected' : '' ?>>Male</option>
-                <option value="Female" <?= $gender == 'Female' ? 'selected' : '' ?>>Female</option>
+                <?php
+                $titles = ['Mr', 'Mrs', 'Ms', 'Hon', 'Baby'];
+                foreach ($titles as $t) {
+                    $selected = $title === $t ? 'selected' : '';
+                    echo "<option value='$t' $selected>$t</option>";
+                }
+                ?>
             </select>
 
+            <label>First Name</label>
+            <input type="text" name="first_name" value="<?= htmlspecialchars($first_name) ?>" required>
+
+            <label>Second Name</label>
+            <input type="text" name="second_name" value="<?= htmlspecialchars($second_name) ?>">
+
+            <label>Last Name</label>
+            <input type="text" name="last_name" value="<?= htmlspecialchars($last_name) ?>" required>
+
+            <label>Date of Birth</label>
+            <input type="date" name="date_of_birth" id="dob" value="<?= htmlspecialchars($date_of_birth) ?>" required>
+
             <label>Age</label>
-            <input type="number" name="age" value="<?= htmlspecialchars($age) ?>" required>
-
-            <label>Phone</label>
-            <input type="text" name="phone" value="<?= htmlspecialchars($phone) ?>" required>
-
-            <label>Address</label>
-            <input type="text" name="address" value="<?= htmlspecialchars($address) ?>" required>
+            <input type="text" id="age" class="age-field" readonly>
 
             <button type="submit" class="btn"><?= $editing ? "Update Patient" : "Save Patient" ?></button>
             <a href="dashboard.php" class="btn-cancel">Cancel</a>
         </form>
     </div>
+
+    <script>
+        const dobInput = document.getElementById('dob');
+        const ageField = document.getElementById('age');
+
+        function calculateAge(dob) {
+            const birthDate = new Date(dob);
+            const today = new Date();
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const m = today.getMonth() - birthDate.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            return age;
+        }
+
+        dobInput.addEventListener('change', () => {
+            const dob = dobInput.value;
+            if (dob) {
+                ageField.value = calculateAge(dob);
+            } else {
+                ageField.value = '';
+            }
+        });
+
+        // Auto-fill age on load if DOB is present (edit mode)
+        if (dobInput.value) {
+            ageField.value = calculateAge(dobInput.value);
+        }
+    </script>
 </body>
 </html>
